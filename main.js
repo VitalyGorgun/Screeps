@@ -31,8 +31,6 @@ module.exports.loop = function () {
         creepsCount++;
     }
 
-//test git
-
     creepsSpawner.run(harvestersCount, upgradersCount, buildersCount);
     console.log("Harvesters: " + harvestersCount + " | Upgraders: " + upgradersCount+ " | Builders: " + buildersCount);
 };
