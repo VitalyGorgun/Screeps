@@ -24,7 +24,7 @@ module.exports.loop = function () {
             upgradersCount++;
         }
         if (creep.memory.role == 'Builder') {
-            roleBuilder.run(creep);  
+            roleBuilder.run(creep);
             buildersCount++;
         }
 
@@ -32,7 +32,7 @@ module.exports.loop = function () {
     }
 
     creepsSpawner.run(harvestersCount, upgradersCount, buildersCount);
-    console.log("Harvesters: " + harvestersCount + " | Upgraders: " + upgradersCount+ " | Builders: " + buildersCount);
+    console.log("Harvesters: " + harvestersCount + " | Upgraders: " + upgradersCount + " | Builders: " + buildersCount);
 };
 
 // spawn.createCreep([WORK, MOVE, MOVE, CARRY]);
