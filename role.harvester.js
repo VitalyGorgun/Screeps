@@ -13,11 +13,13 @@ var roleHarvester = {
                 }
             });
 
-            if (creep.transfer(structures[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if (structures[0] && creep.transfer(structures[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(structures[0]);
 
-                console.log(structures);
+                console.log(structures[0]);
 
+            } else {
+                creep.moveTo(Game.spawns.SP)
             }
         }
     }

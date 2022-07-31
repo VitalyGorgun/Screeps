@@ -1,6 +1,6 @@
 var creepsSpawner = {
     run: function (creepsCounter, creepsNeeded) {
-        let rnd = Math.round(Math.random() * 100)
+        let rnd = Math.round(Math.random() * 10)
 
         if (creepsCounter.harvester < creepsNeeded.harvester) {
             Game.spawns.SP.createCreep([WORK, WORK, CARRY, MOVE], 'H ' + rnd);
@@ -19,4 +19,12 @@ var creepsSpawner = {
 }
 module.exports = creepsSpawner;
 
-//BODYPART_COST: { "move": 50, "work": 100, "attack": 80, "carry": 50, "heal": 250, "ranged_attack": 150, "tough": 10, "claim": 600 }
+// BODYPART_COST: { 
+//     "move": 50, 
+//     "work": 100, 
+//     "attack": 80, 
+//     "carry": 50, 
+//     "heal": 250, 
+//     "ranged_attack": 150, 
+//     "tough": 10, 
+//     "claim": 600 }

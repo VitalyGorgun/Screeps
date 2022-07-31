@@ -7,7 +7,7 @@ const roleBuilder = require('./role.builder');
 module.exports.loop = function () {
 
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0 };
-    let creepsNeeded = { harvester: 3, builder: 4, upgrader: 3 };
+    let creepsNeeded = { harvester: 3, builder: 3, upgrader: 3 };
 
     for (let name in Game.creeps) {
 
@@ -42,5 +42,5 @@ module.exports.loop = function () {
     }
 
     creepsSpawner.run(creepsCounter, creepsNeeded);
-    console.log("Harvesters: " + creepsCounter.harvester + " | Upgraders: " + creepsCounter.upgrader + " | Builders: " + creepsCounter.builder);
+    console.log("H: " + creepsCounter.harvester + " | U: " + creepsCounter.upgrader + " | B: " + creepsCounter.builder);
 };

@@ -1,14 +1,7 @@
 var roleUpgrader = {
     run: function (creep) {
-
-        switch (creep.carry.energy) {//перевірка на заповненість кріпа
-            case 0:
-                creep.memory.full = false;
-                break
-            case creep.carryCapacity:
-                creep.memory.full = true;
-                break
-        }
+        if (creep.carry.energy == 0) creep.memory.full = false;
+        if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
         if (!creep.memory.full) {//Добувати якщо пустий
             let sources = creep.room.find(FIND_SOURCES);

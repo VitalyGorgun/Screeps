@@ -1,15 +1,5 @@
 var roleBuilder = {
     run: function (creep) {
-
-        // switch (creep.carry.energy) {//перевірка на заповненість кріпа
-        //     case 0:
-        //         creep.memory.full = false;
-        //         break
-        //     case creep.carryCapacity:
-        //         creep.memory.full = true;
-        //         break
-        // }
-
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
@@ -20,7 +10,7 @@ var roleBuilder = {
             }
         }
 
-        else {//Модернізувати контролер якщо заповненний
+        else {
             let target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
             if (target) {
                 if (creep.build(target) == ERR_NOT_IN_RANGE) {
