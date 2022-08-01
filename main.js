@@ -8,28 +8,11 @@ const roleCarrier = require('./role.carrier');
 module.exports.loop = function () {
 
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0 };
-    let creepsNeeded = { harvester: 1, builder: 0, upgrader: 3, carrier: 1 };
+    let creepsNeeded = { harvester: 2, builder: 1, upgrader: 5, carrier: 1 };
 
     for (let name in Game.creeps) {
 
         let creep = Game.creeps[name];
-
-        switch (name[0]) {
-            case 'B':
-                creep.memory.role = 'Builder';
-                break
-            case 'U':
-                creep.memory.role = 'Upgrader';
-                break
-            case 'H':
-                creep.memory.role = 'Harvester';
-                break
-            case 'C':
-                creep.memory.role = 'Carrier';
-                break
-
-
-        }
 
         if (creep.memory.role == 'Harvester') {
             roleHarvester.run(creep);

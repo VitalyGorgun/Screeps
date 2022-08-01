@@ -3,22 +3,44 @@ var creepsSpawner = {
         let rnd = Math.round(Math.random() * 10)
 
         if (creepsCounter.harvester < creepsNeeded.harvester) {
-            Game.spawns.SP.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE], 'H ' + rnd);
+            console.log(Memory.source)
+            Game.spawns.SP.createCreep(
+                [WORK, WORK, WORK, WORK, WORK, WORK, WORK,
+                    MOVE],
+                'H ' + rnd,
+                { role: 'Harvester', source: Memory.source, test: 'test' });
+            console.log(Memory.source)
+            Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
+            console.log(Memory.source)
         }
 
         if (creepsCounter.upgrader < creepsNeeded.upgrader &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
-            Game.spawns.SP.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'U ' + rnd);
+            Game.spawns.SP.createCreep(
+                [WORK, WORK, WORK, WORK,
+                    CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE],
+                'U' + rnd,
+                { role: 'Upgrader' });
         }
 
         if (creepsCounter.builder < creepsNeeded.builder &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
-            Game.spawns.SP.createCreep([WORK, WORK, WORK, WORK, WORK,WORK, CARRY, CARRY, MOVE, MOVE], 'B ' + rnd);
+            Game.spawns.SP.createCreep(
+                [WORK, WORK, WORK, WORK, WORK, WORK,
+                    CARRY, CARRY,
+                    MOVE, MOVE],
+                'B ' + rnd,
+                { role: 'Builder' });
         }
 
         if (creepsCounter.carrier < creepsNeeded.carrier &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
-            Game.spawns.SP.createCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,], 'C ' + rnd);
+            Game.spawns.SP.createCreep(
+                [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
+                , 'C ' + rnd,
+                { role: 'Carrier' });
         }
     }
 }
