@@ -2,12 +2,13 @@ const roleHarvester = require('./role.harvester');
 const roleUpgrader = require('./role.upgrader');
 const creepsSpawner = require('./creeps.spawner');
 const roleBuilder = require('./role.builder');
+const roleCarrier = require('./role.carrier');
 
 
 module.exports.loop = function () {
 
-    let creepsCounter = { harvester: 0, builder: 0, upgrader: 0 };
-    let creepsNeeded = { harvester: 3, builder: 3, upgrader: 3 };
+    let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0 };
+    let creepsNeeded = { harvester: 1, builder: 0, upgrader: 3, carrier: 1 };
 
     for (let name in Game.creeps) {
 
@@ -23,8 +24,11 @@ module.exports.loop = function () {
             case 'H':
                 creep.memory.role = 'Harvester';
                 break
-            default:
-                creep.memory.role = 'Harvester';
+            case 'C':
+                creep.memory.role = 'Carrier';
+                break
+
+
         }
 
         if (creep.memory.role == 'Harvester') {
@@ -39,8 +43,13 @@ module.exports.loop = function () {
             roleBuilder.run(creep);
             creepsCounter.builder++;
         }
+
+        if (creep.memory.role == 'Carrier') {
+            roleCarrier.run(creep);
+            creepsCounter.carrier++;
+        }
     }
 
     creepsSpawner.run(creepsCounter, creepsNeeded);
-    console.log("H: " + creepsCounter.harvester + " | U: " + creepsCounter.upgrader + " | B: " + creepsCounter.builder);
+    console.log("H: " + creepsCounter.harvester + " | U: " + creepsCounter.upgrader + " | B: " + creepsCounter.builder + " | C: " + creepsCounter.carrier);
 };
