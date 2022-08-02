@@ -2,16 +2,18 @@ var creepsSpawner = {
     run: function (creepsCounter, creepsNeeded) {
         let rnd = Math.round(Math.random() * 10)
 
+        console.log(Memory.source);
+
         if (creepsCounter.harvester < creepsNeeded.harvester) {
-            console.log(Memory.source)
-            Game.spawns.SP.createCreep(
+            if (Game.spawns.SP.createCreep(
                 [WORK, WORK, WORK, WORK, WORK, WORK, WORK,
                     MOVE],
                 'H ' + rnd,
-                { role: 'Harvester', source: Memory.source, test: 'test' });
-            console.log(Memory.source)
-            Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
-            console.log(Memory.source)
+                { role: 'Harvester', source: Memory.source, test: 'test' }) >= 0
+            ) {
+                Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
+                // console.log(Memory.source)
+            }
         }
 
         if (creepsCounter.upgrader < creepsNeeded.upgrader &&
