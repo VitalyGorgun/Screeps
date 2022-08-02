@@ -5,11 +5,6 @@ var roleCarrier = {
 
         if (!creep.memory.full) {
 
-            // var Container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     filter: (s) => s.structureType == STRUCTURE_CONTAINER
-            //         && s.store[RESOURCE_ENERGY] > 0
-            // })
-
             var Container = creep.room.find(FIND_STRUCTURES, {
                 filter: (s) => s.structureType == STRUCTURE_CONTAINER
             })

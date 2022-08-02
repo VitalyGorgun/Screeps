@@ -12,19 +12,12 @@ var roleCarrier = {
                 }
             })
 
-        if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
+        if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE &&
+            container[creep.memory.source].pos.x != creep.pos.x &&
+            container[creep.memory.source].pos.y != creep.pos.y) {
             creep.moveTo(container[creep.memory.source]);
         }
     }
 };
 
 module.exports = roleCarrier;
-
-
-// const target = creep.pos.findClosestByRange(FIND_STRUCTURES,
-//     {filter: {structureType: STRUCTURE_WALL}});
-// if(target) {
-//     if(creep.dismantle(target) == ERR_NOT_IN_RANGE) {
-//         creep.moveTo(target);
-//     }
-// }

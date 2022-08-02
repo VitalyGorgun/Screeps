@@ -5,15 +5,6 @@ var roleUpgrader = {
 
         if (!creep.memory.full) {
 
-            // var Container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     filter: (s) => s.structureType == STRUCTURE_CONTAINER
-            //         && s.store[RESOURCE_ENERGY] > 0
-            // })
-            // if (creep.withdraw(Container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            //     creep.moveTo(Container)
-            // }
-
-
             var Container = creep.room.find(FIND_STRUCTURES, {
                 filter: (s) => s.structureType == STRUCTURE_CONTAINER
             })
@@ -21,7 +12,7 @@ var roleUpgrader = {
                 creep.moveTo(Container[1])
             }
 
-            
+
         }
 
         else {//Модернізувати контролер якщо заповненний

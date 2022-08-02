@@ -9,11 +9,8 @@ var creepsSpawner = {
                 [WORK, WORK, WORK, WORK, WORK, WORK, WORK,
                     MOVE],
                 'H ' + rnd,
-                { role: 'Harvester', source: Memory.source, test: 'test' }) >= 0
-            ) {
-                Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
-                // console.log(Memory.source)
-            }
+                { role: 'Harvester', source: Memory.source, test: 'test' }) == 'H ' + rnd) 
+                { Memory.source == 0 ? Memory.source = 1 : Memory.source = 0; }
         }
 
         if (creepsCounter.upgrader < creepsNeeded.upgrader &&
