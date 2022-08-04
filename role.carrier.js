@@ -1,28 +1,35 @@
 var roleCarrier = {
-    run: function (creep) {
+    run: function (creep, structures) {
+        let extension = creep.pos.findClosestByRange(structures.extension, { filter: function (object) { return object.energy < object.energyCapacity; } });
+        let towers = creep.pos.findClosestByRange(structures.towers, { filter: function (object) { return object.energy < object.energyCapacity; } });
+        let storages = creep.pos.findClosestByRange(structures.storages);
+        let spawn = structures.spawn;
+        let container = structures.containers[0];
+        // console.log(storages.store[RESOURCE_ENERGY])
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
-        if (!creep.memory.full) {
-
-            var Container = creep.room.find(FIND_STRUCTURES, {
-                filter: (s) => s.structureType == STRUCTURE_CONTAINER
-            })
-            if (creep.withdraw(Container[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(Container[0])
+        if (!creep.memory.full && container.store[RESOURCE_ENERGY] >= 200) {
+            if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(container)
             }
-
+        } else if (!creep.memory.full) {
+            if (creep.withdraw(storages, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storages)
+            }
         } else {
-            structures = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                filter: function (object) {
-                    return object.energy < object.energyCapacity;;
-                }
-            });
- 
-            if (creep.transfer(structures, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(structures);
-            } else {
-                creep.moveTo(Game.spawns.SP)
+            if (creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && spawn.energy < spawn.energyCapacity) {
+                creep.moveTo(spawn);
+                creep.say('spn');
+            } else if (creep.transfer(extension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(extension);
+                creep.say('ext');
+            } else if (creep.transfer(towers, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(towers);
+                creep.say('twr');
+            } else if (creep.transfer(storages, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(storages);
+                creep.say('stg');
             }
         }
     }

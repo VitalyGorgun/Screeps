@@ -2,21 +2,29 @@ var creepsSpawner = {
     run: function (creepsCounter, creepsNeeded) {
         let rnd = Math.round(Math.random() * 10)
 
-        console.log(Memory.source);
+        // console.log(Memory.source);
 
         if (creepsCounter.harvester < creepsNeeded.harvester) {
-            if (Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK, WORK,
-                    MOVE],
-                'H ' + rnd,
-                { role: 'Harvester', source: Memory.source, test: 'test' }) == 'H ' + rnd) 
-                { Memory.source == 0 ? Memory.source = 1 : Memory.source = 0; }
+            Game.spawns.SP.createCreep(
+                [WORK, WORK, WORK, WORK, WORK, WORK,
+                    CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE],
+                'H ' + rnd, { role: 'Harvester' })
         }
+
+        if (creepsCounter.miner < creepsNeeded.miner) {
+            if (Game.spawns.SP.createCreep(
+                [WORK, MOVE],
+                'M ' + rnd, { role: 'Miner', source: Memory.source, test: 'test' }) == 'M ' + rnd) {
+                Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
+            }
+        }
+
 
         if (creepsCounter.upgrader < creepsNeeded.upgrader &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK,
+                [WORK, WORK, WORK, WORK, WORK, WORK,
                     CARRY, CARRY, CARRY, CARRY,
                     MOVE, MOVE, MOVE, MOVE],
                 'U' + rnd,
@@ -26,9 +34,9 @@ var creepsSpawner = {
         if (creepsCounter.builder < creepsNeeded.builder &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY,
-                    MOVE, MOVE],
+                [WORK, WORK, WORK, WORK, WORK,
+                    CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE],
                 'B ' + rnd,
                 { role: 'Builder' });
         }
@@ -36,10 +44,14 @@ var creepsSpawner = {
         if (creepsCounter.carrier < creepsNeeded.carrier &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
-                [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
+                // [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                //     MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
+                // , 'C ' + rnd,
+                // { role: 'Carrier' }
+                [CARRY, MOVE,]
                 , 'C ' + rnd,
-                { role: 'Carrier' });
+                { role: 'Carrier' }
+            );
         }
     }
 }
