@@ -12,9 +12,10 @@ var creepsSpawner = {
                 'H ' + rnd, { role: 'Harvester' })
         }
 
-        if (creepsCounter.miner < creepsNeeded.miner) {
+        if (creepsCounter.miner < creepsNeeded.miner &&
+            creepsCounter.harvester >= creepsNeeded.harvester) {
             if (Game.spawns.SP.createCreep(
-                [WORK, MOVE],
+                [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE],
                 'M ' + rnd, { role: 'Miner', source: Memory.source, test: 'test' }) == 'M ' + rnd) {
                 Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
             }
@@ -25,7 +26,7 @@ var creepsSpawner = {
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
                 [WORK, WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY, CARRY, CARRY,
+                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                     MOVE, MOVE, MOVE, MOVE],
                 'U' + rnd,
                 { role: 'Upgrader' });
@@ -35,7 +36,7 @@ var creepsSpawner = {
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
                 [WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY, CARRY, CARRY,
+                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
                     MOVE, MOVE, MOVE, MOVE],
                 'B ' + rnd,
                 { role: 'Builder' });
@@ -44,13 +45,13 @@ var creepsSpawner = {
         if (creepsCounter.carrier < creepsNeeded.carrier &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
-                // [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                //     MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
-                // , 'C ' + rnd,
-                // { role: 'Carrier' }
-                [CARRY, MOVE,]
+                [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
                 , 'C ' + rnd,
                 { role: 'Carrier' }
+                // [CARRY, MOVE,]
+                // , 'C ' + rnd,
+                // { role: 'Carrier' }
             );
         }
     }

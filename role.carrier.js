@@ -9,7 +9,7 @@ var roleCarrier = {
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
-        if (!creep.memory.full && container.store[RESOURCE_ENERGY] >= 200) {
+        if (!creep.memory.full && container.store[RESOURCE_ENERGY] >= 300) {
             if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(container)
             }

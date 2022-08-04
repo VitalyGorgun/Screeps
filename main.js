@@ -10,7 +10,7 @@ module.exports.loop = function () {
 
     let room = 'E57S52';
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0, miner: 0 };
-    let creepsNeeded = { harvester: 2, builder: 1, upgrader: 1, carrier: 1, miner: 1 };
+    let creepsNeeded = { harvester: 0, builder: 1, upgrader: 2, carrier: 1, miner: 1 };
     let structures = {
 
         extension: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION } }),

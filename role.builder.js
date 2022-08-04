@@ -1,19 +1,26 @@
 var roleBuilder = {
     run: function (creep, structures) {
-        let storages = creep.pos.findClosestByRange(structures.storages);
+        let storage = structures.storages[0];
+        let containers = structures.containers;
+        containers.push(storage);
+        let source = creep.pos.findClosestByRange(containers, {
+            filter: function (object) {
+                return object.store[RESOURCE_ENERGY] >= 300
+            }
+        })
+        console.log(source);
 
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
         if (!creep.memory.full) {
-            if (creep.withdraw(storages, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storages)
+            if (creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(source)
             }
         }
 
         else {
             let target = creep.pos.findClosestByRange(structures.constructionSites);
-            let toRepair = false;//creep.pos.findClosestByRange(structures.toRepair);
 
             if (target) {
                 if (creep.build(target) == ERR_NOT_IN_RANGE) {

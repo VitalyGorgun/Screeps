@@ -9,7 +9,7 @@ module.exports = {
         
         if (structures.toRepair[0]) {
             towers.repair(structures.toRepair[0])
-            console.log('repair' + structures.toRepair[0])
+            console.log('repair ' + structures.toRepair[0].structureType)
         }
 
     }
