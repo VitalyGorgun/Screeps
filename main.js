@@ -5,12 +5,13 @@ const roleBuilder = require('./role.builder');
 const roleCarrier = require('./role.carrier');
 const tower = require('./tower');
 const roleMiner = require('./role.miner');
+const link = require('./link');
 
 module.exports.loop = function () {
 
     let room = 'E57S52';
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0, miner: 0 };
-    let creepsNeeded = { harvester: 0, builder: 1, upgrader: 2, carrier: 1, miner: 1 };
+    let creepsNeeded = { harvester: 1, builder: 1, upgrader: 3, carrier: 1, miner: 2 };
     let structures = {
 
         extension: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION } }),
@@ -21,9 +22,10 @@ module.exports.loop = function () {
         spawn: Game.spawns.SP,
         constructionSites: Game.rooms[room].find(FIND_CONSTRUCTION_SITES),
         sources: Game.rooms[room].find(FIND_SOURCES),
+        links: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_LINK } }),
     }
 
-    // console.log(structures.containers);
+    // console.log(structures.links);
 
     for (let name in Game.creeps) {
         let creep = Game.creeps[name];
@@ -49,6 +51,7 @@ module.exports.loop = function () {
 
 
     tower.tower(room, structures);
+    link(room, structures);
     creepsSpawner.run(creepsCounter, creepsNeeded);
     // console.log("H: " + creepsCounter.harvester + " | U: " + creepsCounter.upgrader + " | B: " + creepsCounter.builder + " | C: " + creepsCounter.carrier);
 };

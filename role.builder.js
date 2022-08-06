@@ -8,7 +8,7 @@ var roleBuilder = {
                 return object.store[RESOURCE_ENERGY] >= 300
             }
         })
-        console.log(source);
+        // console.log(source);
 
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;

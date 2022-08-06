@@ -1,18 +1,12 @@
 var roleUpgrader = {
-    run: function (creep) {
+    run: function (creep, structures) {
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
         let sources = creep.room.find(FIND_SOURCES);
 
         if (!creep.memory.full) {
-            // if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-            //     creep.moveTo(sources[1]);
-            // }
-            var Container = creep.room.find(FIND_STRUCTURES, {
-                filter: (s) => s.structureType == STRUCTURE_CONTAINER
-            })
-            if (creep.withdraw(Container[1], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(Container[1])
+            if (creep.withdraw(structures.storages[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(structures.storages[0])
             }
         }
 

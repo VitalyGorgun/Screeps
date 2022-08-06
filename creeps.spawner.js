@@ -6,16 +6,16 @@ var creepsSpawner = {
 
         if (creepsCounter.harvester < creepsNeeded.harvester) {
             Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY, CARRY, CARRY,
-                    MOVE, MOVE, MOVE, MOVE],
+                [WORK,
+                    CARRY, CARRY,
+                    MOVE, MOVE],
                 'H ' + rnd, { role: 'Harvester' })
         }
 
         if (creepsCounter.miner < creepsNeeded.miner &&
             creepsCounter.harvester >= creepsNeeded.harvester) {
             if (Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE],
+                [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
                 'M ' + rnd, { role: 'Miner', source: Memory.source, test: 'test' }) == 'M ' + rnd) {
                 Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
             }
