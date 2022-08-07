@@ -6,8 +6,9 @@ var roleMiner = {
 
         creep.transfer(structures.links[1], RESOURCE_ENERGY);
 
-        if (container.store[RESOURCE_ENERGY] == 2000) {
-            // console.log('storage ' + creep.memory.source + ' is full')
+        if (container.store[RESOURCE_ENERGY] == 2000 && structures.links[1].store[RESOURCE_ENERGY] == 800 &&
+            container.pos.x == creep.pos.x && container.pos.y == creep.pos.y) {
+            // console.log('container ' + creep.memory.source + ' is full')
         }
 
         else if (creep.harvest(sources[source]) == ERR_NOT_IN_RANGE ||
