@@ -1,49 +1,35 @@
 var creepsSpawner = {
     run: function (creepsCounter, creepsNeeded) {
         let rnd = Math.round(Math.random() * 10)
+        let creepConfig = {
+            carrier: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
+            miner: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
+            upgrader: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+            builder: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+            harvester: [MOVE],
+        }
 
-        if (creepsCounter.harvester < creepsNeeded.harvester) {
+        function queueToSpawn() {//Choiсe which creep to spawn
+            if (creepsCounter.carrier < creepsNeeded.carrier) return 'carrier';
+            else if (creepsCounter.miner < creepsNeeded.miner) return 'miner';
+            else if (creepsCounter.upgrader < creepsNeeded.upgrader) return 'upgrader';
+            else if (creepsCounter.builder < creepsNeeded.builder) return 'builder';
+            else if (creepsCounter.harvester < creepsNeeded.harvester) return 'harvester';
+        }
+
+        function spawner(creepType) {//Spawn choiced creep
             Game.spawns.SP.createCreep(
-                [WORK,
-                    CARRY, CARRY,
-                    MOVE, MOVE],
-                'H ' + rnd, { role: 'Harvester' })
+                creepConfig[creepType], //Creep configuration
+                creepType[0].toUpperCase() + rnd,//Creep name
+                { role: creepType, source: Memory.source });//Creep role init
+            if (creepType == 'miner') Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
         }
-        else if (creepsCounter.miner < creepsNeeded.miner) {
-            if (Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
-                'M ' + rnd, { role: 'Miner', source: Memory.source}) == 'M ' + rnd) {
-                Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
-            }
-        }
-        else if (creepsCounter.carrier < creepsNeeded.carrier) {
-            Game.spawns.SP.createCreep(
-                [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                    MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,]
-                , 'C ' + rnd,
-                { role: 'Carrier' }
-            );
-        }
-        else if (creepsCounter.upgrader < creepsNeeded.upgrader) {
-            Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                    MOVE, MOVE, MOVE, MOVE],
-                'U' + rnd,
-                { role: 'Upgrader' });
-        }
-        else if (creepsCounter.builder < creepsNeeded.builder) {
-            Game.spawns.SP.createCreep(
-                [WORK, WORK, WORK, WORK, WORK,
-                    CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
-                    MOVE, MOVE, MOVE, MOVE],
-                'B ' + rnd,
-                { role: 'Builder' });
-        }
+
+        if (!!queueToSpawn()) spawner(queueToSpawn());
+
     }
 }
 module.exports = creepsSpawner;
-
 // BODYPART_COST: {
 //     "move": 50,
 //     "work": 100,
@@ -54,10 +40,9 @@ module.exports = creepsSpawner;
 //     "tough": 10,
 //     "claim": 600 }
 
-
 // Game.spawns.SP.createCreep(
-//     [CARRY, CARRY, 
-//         MOVE, MOVE, ]
+//     [CARRY, CARRY, CARRY, CARRY, 
+//         MOVE, MOVE, MOVE, MOVE, ]
 //     , 'C ',
 //     { role: 'Carrier' }
 // );

@@ -17,8 +17,6 @@ var roleHarvester = {
             let storages = creep.pos.findClosestByRange(structures.storages);
             let spawn = structures.spawn;
 
-            // console.log(storages);
-
             if (creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && spawn.energy < spawn.energyCapacity) {
                 creep.moveTo(spawn);
                 creep.say('spn');
@@ -33,11 +31,6 @@ var roleHarvester = {
                 creep.say('stg');
             }
         }
-        // if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE ||
-        // container[creep.memory.source].pos.x != creep.pos.x ||
-        // container[creep.memory.source].pos.y != creep.pos.y) {
-        // creep.moveTo(container[creep.memory.source]);
-        // console.log('Harv moving')
     }
 };
 

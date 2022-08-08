@@ -16,6 +16,7 @@ var roleCarrier = {
             if (structures.links[0].store[RESOURCE_ENERGY] >= 100) return structures.links[0];
             else if (container.store[RESOURCE_ENERGY] >= 300) return container;
             else if (storage.store[RESOURCE_ENERGY] >= 300) return storage;
+            else if (!!droppedEnergy) return droppedEnergy;
         }
 
         let targetToTransfer = function () {
@@ -25,13 +26,7 @@ var roleCarrier = {
             else return storage;
         }
 
-        if (droppedEnergy && !creep.memory.full) {
-            if (creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(droppedEnergy);
-                creep.say('drop');
-            }
-        }
-        else if (!creep.memory.full &&
+        if (!creep.memory.full &&
             creep.withdraw(source(), RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(source());
             creep.say(source().structureType);
@@ -44,57 +39,3 @@ var roleCarrier = {
     }
 }
 module.exports = roleCarrier;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // console.log(targetToTransfer());
-
-
-        // if (!creep.memory.full && structures.links[0].store[RESOURCE_ENERGY] >= 100) {
-        //     if (creep.withdraw(structures.links[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        //         creep.moveTo(structures.links[0])
-        //     }
-        // }
-
-        // else if (!creep.memory.full && container.store[RESOURCE_ENERGY] >= 300) {
-        //     if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        //         creep.moveTo(container)
-        //     }
-        // }
-
-        // else if (!creep.memory.full &&
-        //     storages.store[RESOURCE_ENERGY] >= 300 &&
-        //     creep.withdraw(storages, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) creep.moveTo(storages)
-
-        // else if (creep.memory.full) transfer();
-
-        // function transfer() {
-        //     if (creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && spawn.energy < spawn.energyCapacity) {
-        //         creep.moveTo(spawn);
-        //         creep.say('spawn');
-        //     } else if (creep.transfer(extension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && extension.energy < extension.energyCapacity) {
-        //         creep.moveTo(extension);
-        //         creep.say('extension')
-        //     } else if (creep.transfer(towers, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE && towers.energy < extension.energyCapacity) {
-        //         creep.moveTo(towers);
-        //         creep.say('tower')
-        //     }
-        //     else if (creep.transfer(storages, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        //         creep.moveTo(storages);
-        //         creep.say('storage')
-        //     }
-        // }
