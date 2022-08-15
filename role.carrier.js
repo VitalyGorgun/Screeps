@@ -1,29 +1,28 @@
 var roleCarrier = {
     run: function (creep, structures) {
-        let extension = creep.pos.findClosestByRange(structures.extension,
+        let extension = creep.pos.findClosestByPath(structures.extension,
             { filter: function (object) { return object.energy < object.energyCapacity; } });
         let towers = creep.pos.findClosestByRange(structures.towers,
             { filter: function (object) { return object.energy < object.energyCapacity; } });
         let storage = creep.pos.findClosestByRange(structures.storages);
         let spawn = structures.spawn;
         let container = structures.containers[0];
-        let droppedEnergy = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
 
         if (creep.carry.energy == 0) creep.memory.full = false;
         if (creep.carry.energy == creep.carryCapacity) creep.memory.full = true;
 
-        let source = function () {
-            if (structures.links[0].store[RESOURCE_ENERGY] >= 100) return structures.links[0];
-            else if (container.store[RESOURCE_ENERGY] >= 300) return container;
-            else if (storage.store[RESOURCE_ENERGY] >= 300) return storage;
-            else if (!!droppedEnergy) return droppedEnergy;
+        let source = function () {  //selection of a higher priority source
+            // if (structures.links[0].store[RESOURCE_ENERGY] >= 100) return structures.links[0];
+            // else 
+            if (container.store[RESOURCE_ENERGY] >= 300) return container;
+            // else if (storage.store[RESOURCE_ENERGY] >= 300) return storage;
         }
 
-        let targetToTransfer = function () {
+        let targetToTransfer = function () {    //selection of a higher priority target
             if (spawn.energy < spawn.energyCapacity) return spawn;
             else if (!!extension && extension.energy < extension.energyCapacity) return extension;
             else if (!!towers && towers.energy < towers.energyCapacity) return towers;
-            else return storage;
+            // else return storage;
         }
 
         if (!creep.memory.full &&

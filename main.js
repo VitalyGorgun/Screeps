@@ -9,9 +9,9 @@ const link = require('./link');
 
 module.exports.loop = function () {
 
-    let room = 'E57S52';
+    let room = 'W57S26';
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0, miner: 0 };
-    let creepsNeeded = { harvester: 0, builder: 0, upgrader: 1, carrier: 1, miner: 2 };
+    let creepsNeeded = { harvester: 0, builder: 1, upgrader: 3, carrier: 1, miner: 1 };
     let structures = {
 
         extension: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION } }),
@@ -23,7 +23,7 @@ module.exports.loop = function () {
         constructionSites: Game.rooms[room].find(FIND_CONSTRUCTION_SITES),
         sources: Game.rooms[room].find(FIND_SOURCES),
         links: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_LINK } }),
-        
+ 
     }
 
     for (let name in Game.creeps) {
@@ -48,8 +48,7 @@ module.exports.loop = function () {
 
     }
 
-
     tower.tower(room, structures);
-    link(room, structures);
+    // link(room, structures);
     creepsSpawner.run(creepsCounter, creepsNeeded);
 };

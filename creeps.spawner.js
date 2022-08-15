@@ -2,31 +2,38 @@ var creepsSpawner = {
     run: function (creepsCounter, creepsNeeded) {
         let rnd = Math.round(Math.random() * 10)
         let creepConfig = {
-            carrier: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
-            miner: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
-            upgrader: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
-            builder: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
-            harvester: [MOVE],
+            carrier: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,],
+            miner: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
+            upgrader: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
+            builder: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE,],
+            harvester: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+        }
+        let carrierToLive = () => {
+            let creeps = _(Game.creeps).filter({ memory: { role: 'carrier' } }).value();
+            for (let x in creeps) {
+                return creeps[x].ticksToLive < 100 ? true : false;
+            }
+        }
+        // console.log(!carrierToLive());
+
+
+        function queueToSpawn() {   //Choiсe which creep to spawn
+            if (creepsCounter.harvester < creepsNeeded.harvester) return 'harvester';
+            else if (creepsCounter.carrier < creepsNeeded.carrier) return 'carrier';
+            else if (!carrierToLive() && creepsCounter.miner < creepsNeeded.miner) return 'miner';
+            else if (!carrierToLive() && creepsCounter.upgrader < creepsNeeded.upgrader) return 'upgrader';
+            else if (!carrierToLive() && creepsCounter.builder < creepsNeeded.builder) return 'builder';
         }
 
-        function queueToSpawn() {//Choiсe which creep to spawn
-            if (creepsCounter.carrier < creepsNeeded.carrier) return 'carrier';
-            else if (creepsCounter.miner < creepsNeeded.miner) return 'miner';
-            else if (creepsCounter.upgrader < creepsNeeded.upgrader) return 'upgrader';
-            else if (creepsCounter.builder < creepsNeeded.builder) return 'builder';
-            else if (creepsCounter.harvester < creepsNeeded.harvester) return 'harvester';
-        }
-
-        function spawner(creepType) {//Spawn choiced creep
+        function spawner(creepType) {   //Spawn choiced creep
             Game.spawns.SP.createCreep(
                 creepConfig[creepType], //Creep configuration
                 creepType[0].toUpperCase() + rnd,//Creep name
-                { role: creepType, source: Memory.source });//Creep role init
+                { role: creepType, source: Memory.source });    //Creep role init
             if (creepType == 'miner') Memory.source == 0 ? Memory.source = 1 : Memory.source = 0;
         }
 
-        if (!!queueToSpawn()) spawner(queueToSpawn());
-
+        if (!!queueToSpawn()) spawner(queueToSpawn());  //if queue is not empty spawn needed creep
     }
 }
 module.exports = creepsSpawner;
@@ -40,9 +47,4 @@ module.exports = creepsSpawner;
 //     "tough": 10,
 //     "claim": 600 }
 
-// Game.spawns.SP.createCreep(
-//     [CARRY, CARRY, CARRY, CARRY, 
-//         MOVE, MOVE, MOVE, MOVE, ]
-//     , 'C ',
-//     { role: 'Carrier' }
-// );
+// Game.spawns.SP.createCreep([CARRY, CARRY, MOVE, MOVE], 'C ', { role: 'carrier' });
