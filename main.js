@@ -11,19 +11,25 @@ module.exports.loop = function () {
 
     let room = 'W57S26';
     let creepsCounter = { harvester: 0, builder: 0, upgrader: 0, carrier: 0, miner: 0 };
-    let creepsNeeded = { harvester: 0, builder: 1, upgrader: 3, carrier: 1, miner: 1 };
+    let creepsNeeded = { harvester: 0, builder: 1, upgrader: 2, carrier: 1, miner: 1 };
     let structures = {
 
-        extension: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION } }),
-        containers: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_CONTAINER } }),
-        storages: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_STORAGE } }),
-        toRepair: Game.rooms[room].find(FIND_STRUCTURES, { filter: function (object) { return object.hits < object.hitsMax; } }),
-        towers: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_TOWER } }),
+        extensions: structureFilter(STRUCTURE_EXTENSION),
+        containers: structureFilter(STRUCTURE_CONTAINER),
+        storages: structureFilter(STRUCTURE_STORAGE),
+        towers: structureFilter(STRUCTURE_TOWER),
+        links: structureFilter(STRUCTURE_LINK),
+
         spawn: Game.spawns.SP,
         constructionSites: Game.rooms[room].find(FIND_CONSTRUCTION_SITES),
         sources: Game.rooms[room].find(FIND_SOURCES),
-        links: Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_LINK } }),
- 
+
+    }
+
+    console.log(structures.extensions)
+
+    function structureFilter(type) {
+        return Game.rooms[room].find(FIND_STRUCTURES, { filter: { structureType: type, } })
     }
 
     for (let name in Game.creeps) {
@@ -45,7 +51,6 @@ module.exports.loop = function () {
             roleMiner.run(creep, structures);
             creepsCounter.miner++;
         }
-
     }
 
     tower.tower(room, structures);

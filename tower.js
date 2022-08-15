@@ -1,14 +1,31 @@
 module.exports = {
     tower: function (room, structures) {
-        for (let tower in structures.towers) {
-            if (structures.toRepair[0]) {
-//   structures.towers[tower].repair(structures.toRepair[structures.toRepair.length - 1])  
-                if (structures.toRepair[structures.toRepair.length - 1].structureType != 'constructedWall') {
-                    structures.towers[tower].repair(structures.toRepair[structures.toRepair.length - 1])    
-                }
-                // structures.towers[tower].repair(structures.toRepair[structures.toRepair.length - 1])
+        var hostiles = Game.rooms[room].find(FIND_HOSTILE_CREEPS);
 
-                // console.log(structures.toRepair[structures.toRepair.length - 1])
+        structures.towers.forEach(tower => {
+            if (hostiles != 0) tower.attack(hostiles[0]);
+            else tower.repair(structuresToRepair());
+        })
+
+        function structuresToRepair() {
+            let road = structureFilter('road', 'hitsMax');
+            let wall = structureFilter('constructedWall', 300000);
+            let rampart = structureFilter('rampart', 70000);
+            let container = structureFilter('container', 'hitsMax');
+
+            if (road[0]) return road[0];
+            else if (container[0]) return container[0];
+            else if (rampart[0]) return rampart[0];
+            else if (wall[0]) return wall[0];
+        }
+
+        function structureFilter(type, hitsMax) {
+            if (hitsMax == 'hitsMax') {
+                return Game.rooms[room].find(FIND_STRUCTURES,
+                    { filter: function (object) { return object.hits < object.hitsMax && object.structureType == type; } });
+            } else {
+                return Game.rooms[room].find(FIND_STRUCTURES,
+                    { filter: function (object) { return object.hits < hitsMax && object.structureType == type; } });
             }
         }
     }
