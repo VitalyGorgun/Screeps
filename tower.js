@@ -1,5 +1,5 @@
 module.exports = {
-    tower: function (room, structures) {
+    run: function (room, structures) {
         var hostiles = Game.rooms[room].find(FIND_HOSTILE_CREEPS);
 
         structures.towers.forEach(tower => {
@@ -10,7 +10,7 @@ module.exports = {
         function structuresToRepair() {
             let road = structureFilter('road', 'hitsMax');
             let wall = structureFilter('constructedWall', 300000);
-            let rampart = structureFilter('rampart', 70000);
+            let rampart = structureFilter('rampart', 100000);
             let container = structureFilter('container', 'hitsMax');
 
             if (road[0]) return road[0];

@@ -1,12 +1,11 @@
-var roleBuilder = {
+module.exports = {
     run: function (creep, structures) {
-        // let storage = structures.storages[0];
-        let containers = structures.containers;
-        // containers.push(storage);
-        // let sources = creep.room.find(FIND_SOURCES);
-        let source = creep.pos.findClosestByRange(containers, {
+        let sources = structures.containers
+        sources.push(structures.storages[0])
+
+        let source = creep.pos.findClosestByPath(sources, {
             filter: function (object) {
-                return object.store[RESOURCE_ENERGY] >= 300
+                return object.store[RESOURCE_ENERGY] >= 200
             }
         })
 
@@ -29,4 +28,3 @@ var roleBuilder = {
         }
     }
 }
-module.exports = roleBuilder;

@@ -1,12 +1,13 @@
-var creepsSpawner = {
+module.exports = {
     run: function (creepsCounter, creepsNeeded) {
         let rnd = Math.round(Math.random() * 10)
         let creepConfig = {
             carrier: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,],
             miner: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE, CARRY],
-            upgrader: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
+            upgrader: [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
             builder: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE,],
             harvester: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
+            scout: [MOVE]
         }
         let carrierToLive = () => {
             let creeps = _(Game.creeps).filter({ memory: { role: 'carrier' } }).value();
@@ -14,8 +15,6 @@ var creepsSpawner = {
                 return creeps[x].ticksToLive < 100 ? true : false;
             }
         }
-        // console.log(!carrierToLive());
-
 
         function queueToSpawn() {   //Choiсe which creep to spawn
             if (creepsCounter.harvester < creepsNeeded.harvester) return 'harvester';
@@ -23,6 +22,7 @@ var creepsSpawner = {
             else if (!carrierToLive() && creepsCounter.miner < creepsNeeded.miner) return 'miner';
             else if (!carrierToLive() && creepsCounter.upgrader < creepsNeeded.upgrader) return 'upgrader';
             else if (!carrierToLive() && creepsCounter.builder < creepsNeeded.builder) return 'builder';
+            else if (!carrierToLive() && creepsCounter.scout < creepsNeeded.scout) return 'scout';
         }
 
         function spawner(creepType) {   //Spawn choiced creep
@@ -36,7 +36,6 @@ var creepsSpawner = {
         if (!!queueToSpawn()) spawner(queueToSpawn());  //if queue is not empty spawn needed creep
     }
 }
-module.exports = creepsSpawner;
 // BODYPART_COST: {
 //     "move": 50,
 //     "work": 100,
