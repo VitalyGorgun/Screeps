@@ -22,12 +22,6 @@ module.exports = {
             } else if (creep.transfer(extension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(extension);
                 creep.say('ext');
-            } else if (creep.transfer(tower, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(tower);
-                creep.say('twr');
-            } else if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(storage);
-                creep.say('stg');
             }
         }
     }

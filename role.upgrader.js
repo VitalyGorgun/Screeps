@@ -8,7 +8,7 @@ module.exports = {
         let link = structures.links[1];
         let targetDroppedEnergy = findDropedEnergy();
 
-        console.log(targetDroppedEnergy)
+        // console.log(targetDroppedEnergy)
 
         if (!creep.memory.full) {
             if (!!targetDroppedEnergy)
